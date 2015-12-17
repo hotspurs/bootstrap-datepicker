@@ -473,7 +473,8 @@
 		},
 
 		show: function(){
-			if (this.element.attr('readonly') && this.o.enableOnReadonly === false)
+      var element = this.component ? this.element.find('input') : this.element;
+			if (element.attr('readonly') && this.o.enableOnReadonly === false)
 				return;
 			if (!this.isInline)
 				this.picker.appendTo(this.o.container);
@@ -1054,9 +1055,10 @@
 			}
 			this.picker.find('.datepicker-days tbody').empty().append(html.join(''));
 
+			var monthsTitle = dates[this.o.language].monthsTitle || dates['en'].monthsTitle || 'Months';
 			var months = this.picker.find('.datepicker-months')
 						.find('.datepicker-switch')
-							.text(this.o.maxViewMode < 2 ? 'Months' : year)
+							.text(this.o.maxViewMode < 2 ? monthsTitle : year)
 							.end()
 						.find('span').removeClass('active');
 
@@ -1170,17 +1172,18 @@
 			e.preventDefault();
 			e.stopPropagation();
 
-			var target, dir, day, year, month;
-			target = $(e.target);
+      var target, closest, dir, day, year, month;
+      target = $(e.target);
+      closest = target.closest('.prev, .next');
 
-			// Clicked on the switch
-			if (target.hasClass('datepicker-switch')){
-				this.showMode(1);
-			}
+      // Clicked on the switch
+      if (target.hasClass('datepicker-switch')){
+        this.showMode(1);
+      }
 
-			// Clicked on prev or next
-			if (target.closest('.prev, .next').length > 0){
-				dir = DPGlobal.modes[this.viewMode].navStep * (target.hasClass('prev') ? -1 : 1);
+      // Clicked on prev or next
+			if (closest.length > 0){
+				dir = DPGlobal.modes[this.viewMode].navStep * (closest.hasClass('prev') ? -1 : 1);
 				if (this.viewMode === 0){
 					this.viewDate = this.moveMonth(this.viewDate, dir);
 					this._trigger('changeMonth', this.viewDate);

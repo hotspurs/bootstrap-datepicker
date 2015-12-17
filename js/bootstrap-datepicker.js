@@ -1188,17 +1188,18 @@
 			e.preventDefault();
 			e.stopPropagation();
 
-			var target, dir, day, year, month;
-			target = $(e.target);
+      var target, closest, dir, day, year, month;
+      target = $(e.target);
+      closest = target.closest('.prev, .next');
 
-			// Clicked on the switch
-			if (target.hasClass('datepicker-switch')){
-				this.showMode(1);
-			}
+      // Clicked on the switch
+      if (target.hasClass('datepicker-switch')){
+        this.showMode(1);
+      }
 
-			// Clicked on prev or next
-			if (target.closest('.prev, .next').length > 0){
-				dir = DPGlobal.modes[this.viewMode].navStep * (target.hasClass('prev') ? -1 : 1);
+      // Clicked on prev or next
+			if (closest.length > 0){
+				dir = DPGlobal.modes[this.viewMode].navStep * (closest.hasClass('prev') ? -1 : 1);
 				if (this.viewMode === 0){
 					this.viewDate = this.moveMonth(this.viewDate, dir);
 					this._trigger('changeMonth', this.viewDate);
