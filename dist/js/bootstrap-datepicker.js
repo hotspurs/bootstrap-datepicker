@@ -1172,7 +1172,7 @@
 			e.preventDefault();
 			e.stopPropagation();
 
-      var target, closest, dir, day, year, month;
+      var target, closest, dir, day, year, month, closest, parent;
       target = $(e.target);
       closest = target.closest('.prev, .next');
 
@@ -1209,6 +1209,13 @@
 
 			if (!target.hasClass('disabled')){
 				// Clicked on a day
+
+        parent = target.parent();
+
+        if(parent.hasClass('day')){
+          target = parent;
+        }
+
 				if (target.hasClass('day')){
 					day = parseInt(target.text(), 10) || 1;
 					year = this.viewDate.getUTCFullYear();
