@@ -1046,7 +1046,7 @@
 				}
 
 				clsName = $.unique(clsName);
-				html.push('<td class="'+clsName.join(' ')+'"' + (tooltip ? ' title="'+tooltip+'"' : '') + '>'+prevMonth.getUTCDate() + '</td>');
+				html.push('<td class="'+clsName.join(' ')+'"' + (tooltip ? ' title="'+tooltip+'"' : '') + '><div>'+prevMonth.getUTCDate() + '</div></td>');
 				tooltip = null;
 				if (prevMonth.getUTCDay() === this.o.weekEnd){
 					html.push('</tr>');
